@@ -11,6 +11,10 @@ import com.example.blog.repository.RoleRepository;
 import com.example.blog.repository.UserRepository;
 import com.example.blog.serviceImpl.UserDetailsImpl;
 import com.example.blog.utils.JwtUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,6 +50,8 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    Logger logger = LoggerFactory.getLogger(AuthController.class);
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -64,6 +70,8 @@ public class AuthController {
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
+                userDetails.getAge(),
+                userDetails.getPhoneNumber(),
                 roles));
     }
 
@@ -90,6 +98,8 @@ public class AuthController {
                 new Date(),
                 new Date()
         );
+
+        logger.info("new User register: " + toJson(user));
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
@@ -125,5 +135,20 @@ public class AuthController {
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+
+    public static String toJson(Object obj) {
+/*        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+
+        String json = ow.writeValueAsString(object);*/
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            // convert user object to json string and return it
+            return mapper.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            // catch various errors
+            e.printStackTrace();
+        }
+        return "";
     }
 }

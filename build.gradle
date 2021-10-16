@@ -20,10 +20,10 @@ dependencies {
     implementation group: 'org.hibernate', name: 'hibernate-validator', version: '6.2.0.Final'
 //    implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: '3.0.0'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'mysql:mysql-connector-java'
+//    runtimeOnly 'mysql:mysql-connector-java'
+    runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    compileOnly(project(":dao"))
 }
 
 test {
