@@ -1,0 +1,7 @@
+dbconfigs:
+  file-path: Data/bak
+  configs:
+    - func-name: "get_user"
+      q-mode: "db"
+      q-timeout: [5, 3]
+      q-fallback: false

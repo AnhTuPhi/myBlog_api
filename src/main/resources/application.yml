@@ -1,0 +1,21 @@
+server:
+  port: 8080
+  servlet:
+    contextPath: /mba
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/myblog"
+    username: "tms_admin"
+    password: "Usfy3siOO%fX"
+    initialization-mode: never
+  flyway:
+    enabled: false
+  profiles:
+    active: dev
+  jpa:
+    open-in-view: false
+    database: POSTGRESQL
+    properties.hibernate.temp.use_jdbc_metadata_defaults: false
+    hibernate:
+      ddl-auto: none
+
